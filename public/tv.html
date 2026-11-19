@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#16121f">
+<title>my-game · TV</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<!-- Delete this page (and tv.js, and '/tv' in server.js) for a phone-only game. -->
+<body class="tv">
+<main class="tv-layout">
+  <section class="tv-join">
+    <img id="qr" class="qr" alt="QR code to join">
+    <p class="muted">Scan to join, or open</p>
+    <p id="join-url" class="join-url"></p>
+  </section>
+  <section class="tv-game">
+    <p class="muted">Round <span id="round">1</span></p>
+    <h1 id="status" class="status">Waiting for a buzz…</h1>
+    <ul id="players" class="players"></ul>
+    <button id="next" class="btn" type="button">Next round</button>
+    <p class="muted hint">TV remote: press OK for the next round.</p>
+  </section>
+  <p id="offline" class="offline" hidden>Reconnecting…</p>
+</main>
+<script src="/common.js"></script>
+<script src="/tv.js"></script>
+</body>
+</html>

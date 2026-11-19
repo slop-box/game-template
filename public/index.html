@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#16121f">
+<title>my-game</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body class="phone">
+<main>
+  <p id="offline" class="offline" hidden>Reconnecting…</p>
+
+  <!-- Join -->
+  <section id="join" hidden>
+    <h1>my-game</h1>
+    <form id="join-form">
+      <label for="name">Your name</label>
+      <input id="name" maxlength="20" autocomplete="nickname" required>
+      <button class="btn" type="submit">Join</button>
+      <p id="join-error" class="error"></p>
+    </form>
+  </section>
+
+  <!-- Play -->
+  <section id="play" hidden>
+    <p class="muted">Round <span id="round"></span> · <span id="me"></span></p>
+    <button id="buzz" class="buzz" type="button">Buzz!</button>
+    <p id="result" class="result"></p>
+  </section>
+</main>
+<script src="/common.js"></script>
+<script src="/phone.js"></script>
+</body>
+</html>

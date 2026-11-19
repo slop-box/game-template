@@ -1,0 +1,29 @@
+# Publish ghcr.io/slop-box/my-game on every push to main, using Slop Box's shared workflow.
+# The server picks up the new image on Watchtower's next run (not while games are open).
+# To update the server right away: Actions tab → Publish → Run workflow, with "Deploy now" ticked.
+name: Publish
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: Deploy to the server now
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    # The template itself never publishes. Repos created from it do.
+    if: github.repository != 'slop-box/game-template'
+    uses: slop-box/slopboxhub/.github/workflows/publish-game.yml@main
+    with:
+      id: my-game
+      test-command: npm test
+      deploy: ${{ inputs.deploy == true }}
+    secrets: inherit

@@ -1,0 +1,76 @@
+/* Written for older TV browsers too (LG webOS 6 is roughly Chrome 79): no flex `gap`, no :has(). */
+
+:root {
+  --bg: #16121f;
+  --card: #241d33;
+  --text: #f5f0ff;
+  --muted: #b3a8cc;
+  --accent: #ffd23f;
+  --accent-ink: #231a00;
+  --accent-2: #ff6fb5;
+  --focus: #7cf3ff;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.4;
+}
+[hidden] { display: none !important; }
+
+.muted { color: var(--muted); }
+.error { color: #ff8a8a; min-height: 1.4em; }
+.offline {
+  position: fixed; top: 0; left: 0; right: 0; margin: 0; padding: 0.4rem;
+  background: var(--accent-2); color: #1a0010; text-align: center; font-weight: 700;
+}
+
+.btn {
+  display: block; width: 100%;
+  padding: 0.8rem 1rem; border: 0; border-radius: 12px;
+  background: var(--accent); color: var(--accent-ink);
+  font: inherit; font-weight: 800; cursor: pointer;
+}
+.btn:focus { outline: 4px solid var(--focus); outline-offset: 3px; }
+
+/* ---------- phone ---------- */
+
+.phone main { max-width: 28rem; margin: 0 auto; padding: 1.5rem 16px; }
+.phone h1 { color: var(--accent); font-size: 2.2rem; margin: 0 0 1rem; }
+.phone label { display: block; margin-bottom: 0.4rem; }
+.phone input {
+  display: block; width: 100%; margin-bottom: 1rem;
+  padding: 0.8rem; border-radius: 12px; border: 2px solid var(--card);
+  background: var(--card); color: var(--text); font: inherit; font-size: 1.2rem;
+}
+.buzz {
+  display: block; width: 100%; height: 55vh; margin: 1rem 0;
+  border: 0; border-radius: 24px;
+  background: var(--accent-2); color: #1a0010;
+  font: inherit; font-size: 3rem; font-weight: 900; cursor: pointer;
+}
+.buzz:disabled { background: var(--card); color: var(--muted); }
+.result { font-size: 1.5rem; font-weight: 800; text-align: center; min-height: 2em; }
+
+/* ---------- TV (sizes follow the screen width so it reads from the couch) ---------- */
+
+.tv { font-size: 2vw; overflow: hidden; }
+.tv-layout { display: flex; min-height: 100vh; align-items: center; padding: 4vw; }
+.tv-join { flex: 0 0 32%; text-align: center; margin-right: 5vw; }
+.qr { width: 100%; max-width: 26vw; background: #fff; border-radius: 1vw; padding: 1vw; }
+.join-url { font-size: 1.6em; font-weight: 800; color: var(--accent); word-break: break-all; margin: 0; }
+.tv-game { flex: 1 1 auto; }
+.status { font-size: 3.5em; line-height: 1.1; margin: 0.2em 0 0.6em; }
+.status.winner { color: var(--accent-2); }
+.players { list-style: none; padding: 0; margin: 0 0 1.5em; }
+.players li {
+  display: inline-block; margin: 0 0.4em 0.4em 0; padding: 0.2em 0.8em;
+  border-radius: 999px; background: var(--card); font-size: 1.2em;
+}
+.players li.away { opacity: 0.45; }
+.players li.buzzed { background: var(--accent-2); color: #1a0010; font-weight: 800; }
+.tv .btn { width: auto; display: inline-block; font-size: 1.2em; }
+.hint { font-size: 0.8em; }
