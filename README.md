@@ -55,7 +55,7 @@ Add these three pieces to `slop-box/slopboxhub`. The server owner merges the pul
 }
 ```
 
-**`docker-compose.yml`:** add a service. It must have no `ports:`, because Caddy is the only way in.
+**`docker-compose.yml`:** add a service. It must have no `ports:`, because Caddy is the only way in. The second label is the update lock: before updating the game, Watchtower runs it inside the container, and it skips the update while games are open at a party.
 ```yaml
   my-game:
     image: ghcr.io/slop-box/my-game:latest
@@ -63,6 +63,8 @@ Add these three pieces to `slop-box/slopboxhub`. The server owner merges the pul
     networks: [slopbox]
     labels:
       com.centurylinklabs.watchtower.enable: "true"
+      com.centurylinklabs.watchtower.lifecycle.pre-update: >-
+        node -e "fetch('http://hub:8080/update-allowed?id=my-game').then(r=>process.exit(r.ok?0:75),()=>process.exit(75))"
     mem_limit: 512m
     cpus: 1.0
 ```
@@ -89,4 +91,4 @@ The full rules are in [GAME_CONTRACT.md](https://github.com/slop-box/slopboxhub/
 ## Updating the game on the server
 
 - **Push to `main`:** the server picks it up on Watchtower's next scheduled run, but not while games are open at a party.
-- **To test on the server right away:** go to **Actions → Publish → Run workflow** with **Deploy now** ticked. Only your game restarts.
+- **To test on the server:** just push. Watchtower checks every couple of minutes, so the game is usually live a few minutes after the publish finishes. The workflow's **Deploy now** box isn't turned on, so it only publishes the image and prints a warning.

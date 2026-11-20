@@ -1,6 +1,7 @@
 # Publish ghcr.io/slop-box/my-game on every push to main, using Slop Box's shared workflow.
 # The server picks up the new image on Watchtower's next run (not while games are open).
-# To update the server right away: Actions tab → Publish → Run workflow, with "Deploy now" ticked.
+# To update the server right away: Actions tab → Publish → Run workflow, with "Deploy now" ticked
+# (once the server owner turns manual deploys on; until then it only publishes).
 name: Publish
 
 on:

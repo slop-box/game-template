@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 
 const PLACEHOLDER = 'my-game';
-const RESERVED = ['hub', 'www', 'caddy'];
+const RESERVED = ['hub', 'www', 'caddy', 'cloudflared'];
 const FILES = [
   'package.json',
   'server.js',
