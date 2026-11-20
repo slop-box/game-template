@@ -6,7 +6,7 @@ This repo started from `slop-box/game-template`. The template's demo is a buzzer
 
 ## Start a new game from this template
 
-1. **Create your repo:** on GitHub, open `slop-box/game-template`, click **Use this template → Create a new repository**, set the owner to `slop-box`, and clone it.
+1. **Create your repo:** on GitHub, open `slop-box/game-template`, click **Use this template → Create a new repository**, set the owner to `slop-box`, and clone it. Name the repo after your game's id (step 2), all lowercase, e.g. `space-lawyers`, so the repo, image and address all match.
 2. **Choose your game's id:** lowercase letters, digits and hyphens, e.g. `space-lawyers`. It becomes your game's address (`https://<id>.<domain>`) and image name. Check that [games.json](https://github.com/slop-box/slopboxhub/blob/main/games.json) doesn't already use it.
 3. **Set the id** everywhere in one go:
    ```
@@ -68,7 +68,18 @@ Add these three pieces to `slop-box/slopboxhub`. The server owner merges the pul
     mem_limit: 512m
     cpus: 1.0
 ```
-If the game saves anything, also add `volumes: [/mnt/user/appdata/slopbox/my-game:/app/data]`, and save to `process.env.DATA_DIR`.
+If the game saves anything, save it under `process.env.DATA_DIR` (`/app/data`) and give the game a Docker volume, `my-game-data`. Add it to the service:
+```yaml
+    volumes:
+      - my-game-data:/app/data
+```
+Then add one line to the top-level `volumes:` block near the top of the file, next to `hub-data`. Leave the line bare:
+```yaml
+volumes:
+  hub-data:
+  my-game-data:
+```
+Docker fills the new volume from the image's `/app/data`. The Dockerfile already creates that folder owned by `node`, so the game can save with no setup on the server.
 
 **`proxy/Caddyfile`:** add a route. `import gate` keeps the game closed until the host opens Slop Box for a party.
 ```
