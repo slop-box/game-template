@@ -162,7 +162,11 @@ const server = http.createServer((req, res) => {
     });
   }
   if (req.method !== 'GET' && req.method !== 'HEAD') return res.writeHead(405).end();
-  if (url.pathname === '/healthz') return res.writeHead(200, { 'Content-Type': 'text/plain', 'Cache-Control': 'no-store' }).end('ok');
+  // Slop Box lets /healthz through even while games are closed, so you can check which commit is live.
+  if (url.pathname === '/healthz') {
+    return res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' })
+      .end(JSON.stringify({ ok: true, version: process.env.GIT_SHA || 'dev' }));
+  }
   if (url.pathname === '/events') return openStream(req, res, url);
   if (url.pathname === '/qr.svg') return serveQr(res, url.searchParams.get('u') || '');
   let p;

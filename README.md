@@ -93,7 +93,7 @@ http://my-game.{$SLOPBOX_DOMAIN} {
 
 The full rules are in [GAME_CONTRACT.md](https://github.com/slop-box/slopboxhub/blob/main/GAME_CONTRACT.md). This template already follows them:
 
-- **Server:** listens on `$PORT` (default 3000), serves phones at `/` and the TV at `/tv`, and answers `GET /healthz`.
+- **Server:** listens on `$PORT` (default 3000), serves phones at `/` and the TV at `/tv`, and answers `GET /healthz` with the commit it was built from (`{"ok":true,"version":"<commit>"}`). Slop Box lets `/healthz` through even while games are closed, so you can check when your latest push is live.
 - **URLs:** the join QR code uses the address the TV opened (`location.origin`), so it shows `https://my-game.<domain>` behind Slop Box. Set `PUBLIC_URL` to override it.
 - **Live updates:** server-sent events (`/events`), with actions sent as `POST /action`. Phones reconnect on their own after locking.
 - **Docker:** non-root, saved data only in `/app/data`, the Watchtower label, and a healthcheck.
