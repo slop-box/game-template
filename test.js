@@ -69,7 +69,7 @@ async function main() {
     for (let i = 0; i < 50; i++) { try { if ((await get('/healthz')).status === 200) break; } catch {} await sleep(100); }
     assert.deepEqual(JSON.parse((await get('/healthz')).body), { ok: true, version: 'dev' });
 
-    for (const [p, type] of [['/', 'text/html'], ['/tv', 'text/html'], ['/style.css', 'text/css']]) {
+    for (const [p, type] of [['/', 'text/html'], ['/tv', 'text/html'], ['/style.css', 'text/css'], ['/tv-remote.js', 'text/javascript']]) {
       const r = await get(p);
       assert.equal(r.status, 200, p);
       assert.ok(r.type.startsWith(type), p);

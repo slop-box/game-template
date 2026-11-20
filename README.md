@@ -23,7 +23,7 @@ This repo started from `slop-box/game-template`. The template's demo is a buzzer
 5. **Make your game.** Edit:
    - the game rules and state in `server.js`, in the section marked "game state"
    - the phone screen in `public/index.html` and `public/phone.js`
-   - the TV screen in `public/tv.html` and `public/tv.js`
+   - the TV screen in `public/tv.html` and `public/tv.js`. Keep `public/tv-remote.js` as it is: it handles full screen and the remote's Back button (see below).
    - the test in `test.js`
 
    Run `npm test` before pushing. The publish workflow runs it too, and won't publish if it fails.
@@ -33,7 +33,7 @@ This repo started from `slop-box/game-template`. The template's demo is a buzzer
 ### Phone-only game?
 
 A TV is optional:
-- Delete `public/tv.html` and `public/tv.js`, and the `'/tv'` route in `server.js`.
+- Delete `public/tv.html`, `public/tv.js` and `public/tv-remote.js`, and the `'/tv'` route in `server.js`.
 - Set `"needsTv": false` in the `games.json` entry.
 
 Players then open the game from the Slop Box page instead of scanning a QR code.
@@ -98,6 +98,7 @@ The full rules are in [GAME_CONTRACT.md](https://github.com/slop-box/slopboxhub/
 - **Live updates:** server-sent events (`/events`), with actions sent as `POST /action`. Phones reconnect on their own after locking.
 - **Docker:** non-root, saved data only in `/app/data`, the Watchtower label, and a healthcheck.
 - **TV browsers:** the browser code avoids newer JavaScript and CSS, so older TV browsers (e.g. LG webOS 6) work.
+- **TV remote:** `public/tv-remote.js` makes the first OK press go full screen, and makes Back ask "Press Back again to leave" so a stray press doesn't end the game. If your TV page has menus or zoomed views, close them on Back first with `TvRemote.init({ onBack: function () { /* close it; return true if you did */ } })`. Pass `toast: function (msg) { … }` to show the message in your game's style.
 
 ## Updating the game on the server
 
